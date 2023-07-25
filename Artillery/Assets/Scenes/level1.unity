@@ -715,7 +715,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 996b7439f2bed3e4e8a82fef3030344e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DisparosPorJuego: 10
+  DisparosPorJuego: 5
 --- !u!1 &742947956 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -6763858364670572316, guid: 4fa3f0610f895d24d8efa7a7d3826925,

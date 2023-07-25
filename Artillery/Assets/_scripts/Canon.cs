@@ -14,30 +14,45 @@ public class Canon : MonoBehaviour
     }
     private void Update()
     {
-        
-        rotacion += Input.GetAxis("Horizontal") * AdministradorJuego.VelocidadRotacion;
-        
-        
+
+        #region opcion1
+        /////PRIMERA OPCION
+        //rotacion += Input.GetAxis("Horizontal") * AdministradorJuego.VelocidadRotacion;
+        //if (rotacion > 30) rotacion = 30f;
+        //if (rotacion < -60) rotacion = -60;
+        //if (rotacion <= 30 && rotacion >= -60)
+        //{
+        //    transform.localEulerAngles = new Vector3(0.0f, rotacion, 0f);
+        //}
+
+        //if (Input.GetKeyDown(KeyCode.Space) && AdministradorJuego.DisparosPorJuego != 0)
+        //{
+
+        //    GameObject temp = Instantiate(balaPrefab, puntaCanon.transform.position, puntaCanon.transform.rotation);
+        //    Rigidbody tempRB = temp.GetComponent<Rigidbody>();
+        //    Vector3 direccionDisparo = transform.rotation.eulerAngles;
+        //    direccionDisparo.y = -60 + direccionDisparo.x;
+        //    tempRB.velocity = direccionDisparo.normalized * AdministradorJuego.VelocidadBala;
+        //    AdministradorJuego.DisparosPorJuego -= 1;
+        //}
+        #endregion
+        #region opcion2
         if (Input.GetKeyDown(KeyCode.A))
         {
-            transform.Rotate(Vector3.up, -45f);
+            transform.Rotate(Vector3.up, -5f);
         }
         if (Input.GetKeyDown(KeyCode.D))
         {
-            transform.Rotate(Vector3.up, 45f);
+            transform.Rotate(Vector3.up, 5f);
         }
-        //if (rotacion > 90) rotacion = 90f;
-        //if (rotacion < 0) rotacion = 0;
-
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && AdministradorJuego.DisparosPorJuego != 0)
         {
             GameObject bala = Instantiate(balaPrefab, puntaCanon.transform.position, puntaCanon.transform.rotation);
             bala.GetComponent<Rigidbody>().AddForce(puntaCanon.transform.forward * AdministradorJuego.VelocidadBala, ForceMode.Impulse);
-            //GameObject temp=Instantiate(balaPrefab,puntaCanon.transform.position, puntaCanon.transform.rotation);
-            //Rigidbody tempRB=temp.GetComponent<Rigidbody>();
-            //Vector3 direccionDisparo=transform.rotation.eulerAngles;
-            //direccionDisparo.y = 90 - direccionDisparo.x;
-            //tempRB.velocity = direccionDisparo.normalized * AdministradorJuego.VelocidadBala;
+            AdministradorJuego.DisparosPorJuego -= 1;
         }
+        #endregion 
+
+
     }
 }

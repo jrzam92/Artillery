@@ -5,8 +5,8 @@ using UnityEngine;
 public class AdministradorJuego : MonoBehaviour
 {
     public static AdministradorJuego SinglentonAdministradorJuego;
-    public static int VelocidadBala = 30;
-    public  int DisparosPorJuego = 10;
+    public static int VelocidadBala = 50;
+    public static int DisparosPorJuego = 10;
     public static float VelocidadRotacion = 10;
 
     private void Awake()
