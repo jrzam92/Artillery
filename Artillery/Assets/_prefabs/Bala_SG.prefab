@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2596681769063864981}
   - component: {fileID: 6750617783990067915}
   - component: {fileID: 6587819700868208279}
+  - component: {fileID: 3243419524888889633}
   m_Layer: 0
   m_Name: Bala_SG
   m_TagString: Bala
@@ -114,3 +115,17 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 8
   m_CollisionDetection: 1
+--- !u!114 &3243419524888889633
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1176293431186804706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b5d6a66bc074214bb049cf5ab1c7cee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  particulasExplosion: {fileID: 936080325619443072, guid: 8e812be806cbad8478f3e6af0ecdbda0,
+    type: 3}

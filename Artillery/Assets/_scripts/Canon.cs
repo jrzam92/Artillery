@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Canon : MonoBehaviour
 {
@@ -13,6 +14,26 @@ public class Canon : MonoBehaviour
     private AudioSource sourceDisparo;
     private float rotacion;
 
+    public CanonControls canonControls;
+    private InputAction apuntar;
+    private InputAction modificarFuerza;
+    private InputAction disparar;
+
+    private void Awake()
+    {
+        canonControls=new CanonControls();
+    }
+
+    private void OnEnable()
+    {
+        apuntar = canonControls.Canon.apuntar;
+        modificarFuerza = canonControls.Canon.modificarFuerza;
+        disparar = canonControls.Canon.disparar;
+        apuntar.Enable();
+        modificarFuerza.Enable();
+        disparar.Enable();
+        disparar.performed += Disparar;
+    }
     private void Start()
     {
         puntaCanon = transform.Find("PuntaCanon").gameObject;
@@ -24,36 +45,20 @@ public class Canon : MonoBehaviour
 
         #region opcion1
         ///PRIMERA OPCION
-        rotacion += Input.GetAxis("Horizontal") * AdministradorJuego.VelocidadRotacion;
+        //rotacion += Input.GetAxis("Horizontal") * AdministradorJuego.VelocidadRotacion;
+        rotacion +=apuntar.ReadValue<float>()* AdministradorJuego.VelocidadRotacion;
+
         if (rotacion <= 30 && rotacion >= -60)
         {
             transform.localEulerAngles = new Vector3(0.0f, rotacion, 0f);
         }
         if (rotacion > 30) rotacion = 30f;
         if (rotacion < -60) rotacion = -60;
-
-        if ((Input.GetKeyDown(KeyCode.Space) && AdministradorJuego.DisparosPorJuego != 0 && !Bloaqueado))
-        {
-
-            GameObject temp = Instantiate(balaPrefab, puntaCanon.transform.position, transform.rotation);
-            GameObject particulas=Instantiate(PariculasDisparo, puntaCanon.transform.position, transform.rotation);
-            Rigidbody tempRB = temp.GetComponent<Rigidbody>();
-            SeguirCamara.objetivo = temp;
-            Vector3 direccionDisparo = transform.rotation.eulerAngles;//new Vector3(75f, 15f, 0.009f);   transform.rotation.eulerAngles
-         
-            if (direccionDisparo.x.ToString().Equals("270.0198"))
-            {
-                
-                direccionDisparo = new Vector3(direccionDisparo.x, 0f, 0f);
-            }
-
-            //direccionDisparo.y = -60 + direccionDisparo.x; --- haciendo pruebas estas lineas no van de acuerdo a como se esta realizando 
-            tempRB.velocity = direccionDisparo.normalized * AdministradorJuego.VelocidadBala;
-            //sourceDisparo.PlayOneShot(clipDisparo);
-            sourceDisparo.Play();
-            Bloaqueado = true;
-            AdministradorJuego.DisparosPorJuego -= 1;
-        }
+        disparar.performed += Disparar;
+        //if ((Input.GetKeyDown(KeyCode.Space) && AdministradorJuego.DisparosPorJuego != 0 && !Bloaqueado))
+        //{
+        //Disparar();
+        //}
         #endregion
         #region opcion2
         //if (Input.GetKeyDown(KeyCode.A))
@@ -76,5 +81,33 @@ public class Canon : MonoBehaviour
         #endregion
 
 
+    }
+
+    private void Disparar(InputAction.CallbackContext context)
+    {
+        if(AdministradorJuego.DisparosPorJuego != 0 && !Bloaqueado)
+        {
+            print(AdministradorJuego.DisparosPorJuego);
+        
+        GameObject temp = Instantiate(balaPrefab, puntaCanon.transform.position, transform.rotation);
+        GameObject particulas = Instantiate(PariculasDisparo, puntaCanon.transform.position, transform.rotation);
+        Rigidbody tempRB = temp.GetComponent<Rigidbody>();
+        SeguirCamara.objetivo = temp;
+        Vector3 direccionDisparo = transform.rotation.eulerAngles;//new Vector3(75f, 15f, 0.009f);   transform.rotation.eulerAngles
+
+        if (direccionDisparo.x.ToString().Equals("270.0198"))
+        {
+
+            direccionDisparo = new Vector3(direccionDisparo.x, 0f, 0f);
+        }
+
+        //direccionDisparo.y = -60 + direccionDisparo.x; --- haciendo pruebas estas lineas no van de acuerdo a como se esta realizando 
+        tempRB.velocity = direccionDisparo.normalized * AdministradorJuego.VelocidadBala;
+        //sourceDisparo.PlayOneShot(clipDisparo);
+        sourceDisparo.Play();
+
+        Bloaqueado = true;
+        AdministradorJuego.DisparosPorJuego -= 1;
+        }
     }
 }
